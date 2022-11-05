@@ -18,19 +18,19 @@ public clienteRepository:ClienteRepository
    * Add service methods here
    */
 
-  GenerarClave(){
-    let password = generador(8, false);//asignamos el valor de la clave //longitud
+  GenerarPassword(){
+    const password = generador(8, false);//asignamos el valor de la password //longitud
     return password;
   }
 
-  CifrarClave(password : string){
-    let passwordCifrada = cryptoJS.MD5(password).toString();
+  CifrarPassword(password : string){
+    const passwordCifrada = cryptoJS.MD5(password).toString();
     return passwordCifrada;
   }
 
   IdentificarCliente(usuario: string, password: string){
     try {
-      let p =  this.clienteRepository.findOne({where: {correo: usuario, password: password}})
+      const p =  this.clienteRepository.findOne({where: {correo: usuario, password: password}})
       if(p){
         return p;
       }
@@ -41,7 +41,7 @@ public clienteRepository:ClienteRepository
   }
 
     GenerarTokenJWT(cliente: Cliente){
-      let token = jwt.sign({
+      const token = jwt.sign({
         data: {
          id: cliente.id,
          correo: cliente.correo,
@@ -54,10 +54,10 @@ public clienteRepository:ClienteRepository
     }
 
     ValidarTokenJWT(token: string){
-      try{
-        let datos = jwt.verify(token, Llaves.claveJWT);
+      try {
+        const datos = jwt.verify(token, Llaves.claveJWT);
         return datos;
-      } catch{
+      } catch {
         return false;
       }
     }
